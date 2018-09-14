@@ -25,10 +25,11 @@ module OSC
   end
 
   def self.coerce_argument arg
+    int = RUBY_VERSION >= "2.4" ? Integer : Fixnum
     case arg
     when OSCArgument then arg.to_osc_type
     when Symbol      then arg.to_s
-    when String, Float, Fixnum, Blob, String then arg # Pure osc 1.0 specification
+    when String, Float, int, Blob, String then arg # Pure osc 1.0 specification
     else raise(TypeError, "#{ arg.inspect } is not a valid Message argument") end
   end
 
@@ -49,9 +50,10 @@ module OSC
   end
 
   def self.encoding_directive obj #:nodoc:
+    int = RUBY_VERSION >= "2.4" ? Integer : Fixnum
     case obj
     when Float  then [obj, 'f', 'g']
-    when Fixnum then [obj, 'i', 'N']
+    when int    then [obj, 'i', 'N']
     when Blob   then [[obj.bytesize, obj], 'b', "Na*x#{ padding_size obj.bytesize + 4 }"]
     when String then [obj, 's', "Z*x#{ padding_size obj.bytesize + 1 }"]
     when Time
