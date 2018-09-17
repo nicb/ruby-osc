@@ -28,7 +28,7 @@ module OSC
     case arg
     when OSCArgument then arg.to_osc_type
     when Symbol      then arg.to_s
-    when String,Float,Integer,Blob,String then arg # Pure osc 1.0 specification
+    when String, Float, Integer, Blob, String then arg # PureOsc 1.0 spec
     else raise(TypeError, "#{ arg.inspect } is not a valid Message argument") end
   end
 
