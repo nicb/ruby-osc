@@ -3,11 +3,11 @@ require "#{ File.dirname __FILE__ }/spec_helper"
 
 describe Message do
   it "should raise TypeError if passing wrong type" do
-    -> { Message.new('address', Class) }.should raise_error(TypeError)
+    expect { Message.new('address', Class) }.to raise_error(TypeError)
   end
 
   it "should raise TypeError if not passing a string for address" do
-    -> { Message.new(OSC) }.should raise_error(TypeError)
+    expect { Message.new(OSC) }.to raise_error(TypeError)
   end
 
   it "should have address" do
